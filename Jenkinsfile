@@ -6,8 +6,35 @@ pipeline {
     stages {
         stage('TEST') {
             steps {
-                sh 'npm version'
-                sh 'npm install'
+                script {
+                    echo "Testing Application"
+                }
+            }
+        }
+        stage ('Build') {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
+            steps {
+                script {
+                    echo "Building Application"
+                    sh 'npm version'
+                    sh 'npm install'
+                }
+            }
+        }
+        stage ('Deploy') {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
+            steps {
+                script {
+                    echo "Deploy Application"
+                }
             }
         }
     }
